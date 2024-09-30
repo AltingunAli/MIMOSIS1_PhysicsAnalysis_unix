@@ -1,0 +1,45 @@
+#################################################################################################
+################################ MIMOSIS1_PhysicsAnalysis_unix ##################################
+#################################################################################################
+
+## Adding parameters for the definition of the pixel row range:
+~~ row_start and row_end parameters are added to be read in the run_all.sh shell file
+
+
+## Adding "clean_plot" parameter
+~~ clean_plot paramater is added in the shell file and this parameter is used to
+generate more precise and visually appealing representations of S-curve plots. 
+This parameter is used to get rid of the effects of the noisy pixels on the results.
+
+The condition is set to (max_of_scurve <= nb_of_frames * 1.1) in HistoPlotter.cpp where only the pixels with s curves having 
+a maximum value of nb_of_frames * 1.1 will be considered in the calculations.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Writing the results in outputData/Results.txt
+~~ A txt file is created in order to write the results:
+
+Run Number 	Offset[e]   FPN[e] 	Noise[e]
+..      	..	    ..		..
+..      	..	    ..		.. 	Clean Plot
+
+~~ Second line is the results for the clean plots
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Adding "VPH_Fine_mV" parameter
+~~ Normally, it is assumed that 1 e equals to 1 mV.
+However, during the charcterization, it is possible to have a shift and this shift is determined 
+by VPH fine value. So 1 e value can ve converted by using VPH_Fine_mV.
+In the HistoPlotter.cpp is it modifided in that way:
+
+	From: 
+	_v_param_values[i] = _v_param_values[i]+_dac_shift;
+	
+	To:
+	_v_param_values[i] = _v_param_values[i] * _VPH_Fine_mV + _dac_shift;
+	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+## Several changes are also made in the HistoPlotter.cpp for saving the plots.
+
