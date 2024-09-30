@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while read -r run	chip	matrix	hv	backbias	vcasn2	vclip	vpl	vph	input	stepsize	nbstep	vcasnLSB	vcasnMV
+while read -r run	chip	matrix	hv	backbias	vcasn2	vclip	vpl	vph	input	stepsize	nbstep	vcasnLSB	vcasnMV	row_start	row_end	clean_plot VPH_Fine_mV
 
 do
 
@@ -10,8 +10,8 @@ do
 	rm 	config_file.cfg
 	touch 	config_file.cfg
 
-	row_start=1
-	row_end=503
+	#row_start=0
+	#row_end=127
 
 	vplvph_shift=${input}
 
@@ -46,6 +46,8 @@ esac
 
 echo "_input_file_masked_pixel:	./masked/empty.txt" >> config_file.cfg	
 
+echo "_clean_plot:		${clean_plot}" >> config_file.cfg	
+
 echo "_active_selected:		0" >> config_file.cfg		
 echo "_input_file_active_selected:	active_selected.txt" >> config_file.cfg	
 
@@ -63,7 +65,9 @@ echo "_nb_of_column:		1024" >> config_file.cfg
 echo "_row_start:		${row_start}" >> config_file.cfg	
 echo "_row_end:		${row_end}" >> config_file.cfg	
 echo "_column_start:		${column_start}" >> config_file.cfg	
-echo "_column_end:		${column_end}" >> config_file.cfg	
+echo "_column_end:		${column_end}" >> config_file.cfg
+
+echo "_VPH_Fine_mV:	${VPH_Fine_mV}" >> config_file.cfg	
 
 echo "_param_1:	VBB" >> config_file.cfg	
 echo "_param_2:	VPH_fine" >> config_file.cfg	
